@@ -8,6 +8,65 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class ConcertsDB {
+	private int id=0;
+	private String moviename="result not found";
+	private String description="x";
+	private String thumbnail ="x";
+	private String rating ="x";
+	
+	
+	public ConcertsDB() {
+		super();
+	}
+	
+	
+	
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
+	public String getMoviename() {
+		return moviename;
+	}
+	public void setMoviename(String moviename) {
+		this.moviename = moviename;
+	}
+	public String getDescription() {
+		return description;
+	}
+	public void setDescription(String description) {
+		this.description = description;
+	}
+	public String getThumbnail() {
+		return thumbnail;
+	}
+	public void setThumbnail(String thumbnail) {
+		this.thumbnail = thumbnail;
+	}
+	public String getRating() {
+		return rating;
+	}
+	public void setRating(String rating) {
+		this.rating = rating;
+	}
+
+    public void setallvalue(String name) {
+           for(int i=0;i<getcolumn();i++) {
+        	   if(name.equals(getconcert(i+1)[1])) {
+        	   
+        	   setId(Integer.parseInt(getconcert(i+1)[0]));
+        	   setMoviename(getconcert(i+1)[1]);
+        	   setDescription(getconcert(i+1)[2]);
+        	   setThumbnail(getconcert(i+1)[3]);
+        	   setRating(getconcert(i+1)[4]);
+        	   
+        	   }
+           }
+        	   
+    }
+
 	Connection conn = null;
 	Statement stmt = null;
 	PreparedStatement ps = null;
@@ -100,5 +159,29 @@ public class ConcertsDB {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+	}
+	public int getcolumn () {
+		String x="";
+		connectMeIn();
+		String SQL = "SELECT count(*) from concert";
+	    Statement stat;
+		try {
+			stat = conn.createStatement();
+			ResultSet rs = stat.executeQuery(SQL);
+			while (rs.next()){
+              x=rs.getString(1);
+
+			}   
+		        
+		    
+			
+		    stat.close();
+		        
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		closeConnection();
+		int y=Integer.parseInt(x);
+		return y;
 	}
 }

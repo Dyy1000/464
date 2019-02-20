@@ -19,4 +19,14 @@
     <servlet-name>VenueAndConcertSearchQuery</servlet-name>
     <url-pattern>/VenueAndConcertSearchQuery</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>ConcertSearchResult</display-name>
+    <servlet-name>ConcertSearchResult</servlet-name>
+    <servlet-class>lecture464.servlet.ConcertSearchResult</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ConcertSearchResult</servlet-name>
+    <url-pattern>/ConcertSearchResult</url-pattern>
+  </servlet-mapping>
 </web-app>

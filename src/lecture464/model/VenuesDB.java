@@ -8,6 +8,68 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class VenuesDB {
+	private int id=0;
+	private String Name="";
+	private String Address="";
+	private int owerID =0;
+	private String City ="";
+	private String State="";
+	private String PostalCode ="";
+	
+	
+	public VenuesDB() {
+		super();
+	}
+	
+	
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
+	public String getName() {
+		return Name;
+	}
+	public void setName(String name) {
+		Name = name;
+	}
+	public String getAddress() {
+		return Address;
+	}
+	public void setAddress(String address) {
+		Address = address;
+	}
+	public int getOwerID() {
+		return owerID;
+	}
+	public void setOwerID(int owerID) {
+		this.owerID = owerID;
+	}
+	public String getCity() {
+		return City;
+	}
+	public void setCity(String city) {
+		City = city;
+	}
+	public String getState() {
+		return State;
+	}
+	public void setState(String state) {
+		State = state;
+	}
+	public String getPostalCode() {
+		return PostalCode;
+	}
+	public void setPostalCode(String postalCode) {
+		PostalCode = postalCode;
+	}
+
+
+
+
+
+
 	Connection conn = null;
 	Statement stmt = null;
 	PreparedStatement ps = null;
@@ -23,7 +85,30 @@ public class VenuesDB {
 	static final String PASS = "j87aDc";   // Replace with your CSE MySQL_PASSWORD
 	
 	
-	
+	public int getcolumn () {
+		String x="";
+		connectMeIn();
+		String SQL = "SELECT count(*) from venue";
+	    Statement stat;
+		try {
+			stat = conn.createStatement();
+			ResultSet rs = stat.executeQuery(SQL);
+			while (rs.next()){
+              x=rs.getString(1);
+
+			}   
+		        
+		    
+			
+		    stat.close();
+		        
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		closeConnection();
+		int y=Integer.parseInt(x);
+		return y;
+	}
 	public String[] getvenue (int col){
 		connectMeIn();
 		String SQL = "SELECT * from venue";
@@ -78,7 +163,7 @@ public class VenuesDB {
 	}
 	public void displayAllUsers() {
 		connectMeIn();
-		String SQL = "SELECT * from concert";
+		String SQL = "SELECT * from venue";
 	    Statement stat;
 	    int i=0;
 		try {

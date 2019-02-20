@@ -8,10 +8,13 @@ import lecture464.model.VenuesDB;
 public class supppp {
 
 	public static void main(String[] args) {
-		VenuesDB db = new VenuesDB();
+		ConcertsDB db = new ConcertsDB();
 		
 
-		System.out.println(db.getvenue(2)[2]);
+		System.out.println(db.getconcert(2)[1]);
+		db.setallvalue("xxoo");
+		
+		System.out.println(db.getId()+" "+db.getMoviename());
 
 
 	} 

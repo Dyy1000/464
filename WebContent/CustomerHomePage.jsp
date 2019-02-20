@@ -24,15 +24,14 @@ VenuesDB ven = new VenuesDB();
 <form action=Welcome.jsp>
 <button type= submit class=logout>Logout</button>
 </form>
+
 <a href="ViewOrder.jsp">View Order</a><br>
 <form action=VenueAndConcertSearchQuery  method=get>
+
+			
 Search <input type=text name=ConcertSearch><br>
 <input type=submit value=search>
 </form>
-Venue:
-<select>
-  <option value="visa"><%= ven.getvenue(2)[1]%></option>
-</select>
 <p>EXpire Date
 </br>
 day
@@ -97,5 +96,25 @@ year
 </select>
 
 </p>
+
+<%
+String txt="<select>";
+int x =ven.getcolumn();
+String y="";
+
+
+for (int i = 0; i < x; i++) {
+	 y = ven.getvenue(i+1)[1]; ; 
+	txt += "<option value="+i+">"+y+"</option>";
+
+	}
+txt+="</select>";
+%>
+Venue:
+<p id="demo"><%= txt %></p>
+<script>
+
+
+</script>
 </body>
 </html>

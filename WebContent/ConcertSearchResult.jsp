@@ -4,9 +4,6 @@
 <html>
 <head>
 <style>
-p {
-  visibility: hidden;
-}
 
 .logout{
 
@@ -21,13 +18,10 @@ table
 <title>hello</title>
 </head>
 <body>
+
 <form action=Welcome.jsp>
 <button type= submit class=logout>Logout</button>
 </form>
-<%
-String Query = request.getParameter("ConcertSearch");
-
-%> 
 
 <form action=ViewOrder.jsp>
 <button type= submit>View Order</button>
@@ -37,10 +31,10 @@ String Query = request.getParameter("ConcertSearch");
 
 <table id=table>
 <tr>
-<form action="ConcertDetailandSelection.jsp" method=get>
-<th><input type=text name=concert value=<%=Query%>></th>
+
+<th>${concertinfo.moviename}</th>
 <th><button type="submit" >View Detail</button></th>
-</form>
+
 </tr>
 <tr>
 <td>Building</td>
@@ -64,23 +58,14 @@ String Query = request.getParameter("ConcertSearch");
 </tr>
 <tr>
 <td>Thumbnail</td>
-<td>???</td>
+<td>${concertinfo.thumbnail}</td>
 </tr>
 </table>
 <form action=CustomerHomePage.jsp>
 <button type= submit>Back</button>
 </form>
 <script>
-var x=<%=Query%>;
 
-
- if(x=="one"){
-  document.getElementById("table").style.visibility = "visible";
- 
-}else{
-	document.getElementById("table").style.visibility = "hidden";
-	document.getElementById("nores").style.visibility = "visible";
-	}
 </script>
 
 </body>
