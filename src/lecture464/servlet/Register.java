@@ -37,63 +37,7 @@ public class Register extends HttpServlet {
 		String userName = request.getParameter("userName");
 		String password = request.getParameter("password");
 		
-		/* The users.properties file is stored in the "WEB-INF" folder.
-		   To access this file, you will need its absolute path. */
-		
-		/*
-		 * Note: the content of the properties file may not be visible
-		 */
-		 
-		/* Following two statements are used to obtain the absolute path 
-		   of the users.properties file from its relative path. */
-		PrintWriter webWrite=response.getWriter();
 
-		
-		ServletContext sc = this.getServletContext();
-		String propFilePath = sc.getRealPath("/WEB-INF/users.properties");
-		webWrite.println(propFilePath);
-		//String propFilePath ="/Users/ydeng6/Downloads/IntegratedServletAndJSP/WebContent/WEB-INF/users.properties";
-		
-		/*
-		 * User Registration:
-		 * The following section is used to create a properties object,
-		 * then to access the properties file via it,
-		 * store username and password
-		 * This part should commented out to do registration via the User object
-		 */
-		
-		
-		  
-		Properties p = new Properties(); // Create a Properties object
-		
-		FileInputStream fis = null; // Create a FileInputStrem object
-		
-		try {		
-			fis = new FileInputStream(propFilePath);
-			p.load(fis); // Load data from the FileInputStrem object
-			
-			p.setProperty(userName, password); // Sets the property in the Properties object
-			p.store(new FileOutputStream(propFilePath), null); // Writes the properties in the FileOutputStream object
-			
-			 // Link-redirection
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} finally {
-			if (fis != null) {
-				fis.close();
-			}
-		}
-		
-		// Uncomment the following block to do registration via the User object
-		
-		// Registration via the Users object
-		Users aUser = new Users(userName, password);
-		
-		//First check whether the user already exists via methods from Users class
-		
-		// Register the Users object
-		aUser.registerUser(aUser, propFilePath);
 		response.sendRedirect("Welcome.jsp");
 		
 		

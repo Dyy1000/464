@@ -25,15 +25,18 @@ VenuesDB ven = new VenuesDB();
 <button type= submit class=logout>Logout</button>
 </form>
 
-<a href="ViewOrder.jsp">View Order</a><br>
+<form action=ViewOrder>
+<button type= submit >view order</button>
+</form><br>
 <form action=VenueAndConcertSearchQuery  method=get>
 
 			
-Search <input type=text name=ConcertSearch><br>
-<input type=submit value=search>
-</form>
-<p>EXpire Date
-</br>
+name: <input type=text name=ConcertSearch><br>
+
+
+
+<p> Date
+<br>
 day
 <select>
   <option value="1">1</option>
@@ -71,17 +74,17 @@ day
 month
 <select>
   <option value="Jan">Jan</option>
-  <option value="Master">Feb</option>
-  <option value="Discover">Mar</option>
-  <option value="Jan">Apr</option>
-  <option value="Master">May</option>
-  <option value="Discover">Jun</option>
-  <option value="Jan">Jul</option>
-  <option value="Master">Aug</option>
-  <option value="Discover">Sep</option>
-  <option value="Jan">Oct</option>
-  <option value="Master">Nov</option>
-  <option value="Discover">Dec</option>
+  <option value="Feb">Feb</option>
+  <option value="Mar">Mar</option>
+  <option value="Apr">Apr</option>
+  <option value="May">May</option>
+  <option value="Jun">Jun</option>
+  <option value="Jul">Jul</option>
+  <option value="Aug">Aug</option>
+  <option value="Sep">Sep</option>
+  <option value="Oct">Oct</option>
+  <option value="Nov">Nov</option>
+  <option value="Dec">Dec</option>
 </select>
 year
 <select>
@@ -98,22 +101,31 @@ year
 </p>
 
 <%
-String txt="<select>";
+String txt="<select id='mySelect' onchange='myFunction()'>";
 int x =ven.getcolumn();
 String y="";
 
 
 for (int i = 0; i < x; i++) {
 	 y = ven.getvenue(i+1)[1]; ; 
-	txt += "<option value="+i+">"+y+"</option>";
+	txt += "<option value='"+y+"'>"+y+"</option>";
 
 	}
 txt+="</select>";
 %>
+
 Venue:
 <p id="demo"><%= txt %></p>
+<input type=text id="result" value="avery hall" name=venue >
+</br>
+<input type=submit value=search>
+</form>
 <script>
-
+document.getElementById("result").style.display="none";
+function myFunction() {
+	  var x = document.getElementById("mySelect").value;
+	  document.getElementById("result").value = x;
+	}
 
 </script>
 </body>

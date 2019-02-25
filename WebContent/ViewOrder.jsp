@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+ <%@ page import="lecture464.model.OrdersDB"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,7 +13,9 @@
    right:10px;
    top:5px;
 }
-
+.order{
+border-style: solid;
+}
 </style>
 </head>
 <body>
@@ -22,13 +25,18 @@
 <form action=Welcome.jsp>
 <button type= submit class=logout>Logout</button>
 </form>
-<div>
-<p>Order Number:1234567</p>
+<div class="order">
+<p>Order Number:</p>
 <p>Order Total;1</p>
 <p>Ordered date:Jan 11,2019</p>
 <form action=ManageOrder.jsp>
 <button type= submit>View</button>
 </form>
+
+<%OrdersDB order=new OrdersDB();
+  String txt="${userinfo.id}";
+%>
+<%=txt %>
 </div>
 
 </body>

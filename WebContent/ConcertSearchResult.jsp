@@ -1,10 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="lecture464.model.ConcertsDB"%>
 <!DOCTYPE html>
 <html>
 <head>
 <style>
-
+.invis{
+   display: none;
+}
 .logout{
 
    position:fixed;
@@ -26,23 +29,26 @@ table
 <form action=ViewOrder.jsp>
 <button type= submit>View Order</button>
 </form>
-<p id=nores>result not found</p>
 
-
+<form action=ConcertSearchResult>
+<input type=text class="invis" name=concert value="${concertinfo.name}">
+<input type=text class="invis" name=venue value="${concertinfo.venue}">
+<input type=text class="invis" name=time value="${concertinfo.starttime}">
+<input type=text class="invis" name=price value="${concertinfo.price}">
 <table id=table>
 <tr>
 
-<th>${concertinfo.moviename}</th>
+<th>${concertinfo.name}</th>
 <th><button type="submit" >View Detail</button></th>
 
 </tr>
 <tr>
 <td>Building</td>
-<td>Avery hall</td>
+<td>${concertinfo.venue}</td>
 </tr>
 <tr>
 <td>Start time</td>
-<td>Dec 11,2019</td>
+<td>${concertinfo.starttime}</td>
 </tr>
 <tr>
 <td>Avaliable Seats</td>
@@ -50,7 +56,7 @@ table
 </tr>
 <tr>
 <td>Price</td>
-<td>100$</td>
+<td>${concertinfo.price }</td>
 </tr>
 <tr>
 <td>Opening act</td>
@@ -61,6 +67,7 @@ table
 <td>${concertinfo.thumbnail}</td>
 </tr>
 </table>
+</form>
 <form action=CustomerHomePage.jsp>
 <button type= submit>Back</button>
 </form>

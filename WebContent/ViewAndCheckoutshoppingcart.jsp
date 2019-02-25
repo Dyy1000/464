@@ -12,11 +12,19 @@
    right:10px;
    top:5px;
 }
-
+#cart{
+border-style: solid;
+width: 50%;
+}
+#notfound{
+display:none;
+}
+.invis{
+display:none;
+}
 </style>
 </head>
 <body>
-<% int x=60; %>
 <form action=CustomerHomePage.jsp>
 <button type= submit>Home</button>
 </form>
@@ -24,24 +32,34 @@
 <button type= submit class=logout>Logout</button>
 </form>
 <h1>Shopping Cart</h1>
+<form action=Shopping>
 <div id= cart>
-<p>Headliner: Deng Yang</p>
-<p>Dec 11 , 2019 12:00</p>
-<p>ticket being bought: 3</p>
-<p>Ticket price: 20</p>
-<p>Total price : <%= x %> </p>
+<p>Concert Identifier: ${shoppingcartinfo.id} </p>
+<p>ticket quantity: ${shoppingcartinfo.quantity} </p>
+<p>ticket type:${shoppingcartinfo.type}  </p>
+<p>Movie Name:${shoppingcartinfo.band} </p>
+<p>thumbnail: ${shoppingcartinfo.thumbnail}</p>
+<p>Venue name :${shoppingcartinfo.venue} </p>
+<p>Show time:${shoppingcartinfo.time}</p>
+<button type=submit>Delete</button>
 </div>
-<button onclick=del()>Delete</button>
+<div id=notfound>
+<h3>Nothing in cart yet</h3>
+</div>
+<p>Total Price:${shoppingcartinfo.total}</p>
+<input class="invis" id=con name= conid value='0'>
+
+</form>
 <script>
-function del() {
-	  var del = document.getElementById("cart");
-	  del.remove();
-	  document.getElementById("tot").innerHTML="0"
-	  
-	}
+var a=0;
+var b=${shoppingcartinfo.id};
+var del = document.getElementById("cart");
+if(a==b){
+del.style.display="none";
+document.getElementById("notfound").style.display="block";
+}
+
 </script>
-<p>Total cost:  </p>
-<p id=tot>60</p>
 <form action=CustomerTransaction.jsp >
 <button type= submit class=checkout>Check Out</button>
 </form>

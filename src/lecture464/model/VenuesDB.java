@@ -9,12 +9,14 @@ import java.sql.Statement;
 
 public class VenuesDB {
 	private int id=0;
-	private String Name="";
-	private String Address="";
+	private String name="";
+	private String address="";
 	private int owerID =0;
-	private String City ="";
-	private String State="";
-	private String PostalCode ="";
+	private String city ="";
+	private String state="";
+	private String postalCode ="";
+	private String price="";
+	
 	
 	
 	public VenuesDB() {
@@ -29,16 +31,16 @@ public class VenuesDB {
 		this.id = id;
 	}
 	public String getName() {
-		return Name;
+		return name;
 	}
 	public void setName(String name) {
-		Name = name;
+		this.name = name;
 	}
 	public String getAddress() {
-		return Address;
+		return address;
 	}
 	public void setAddress(String address) {
-		Address = address;
+		this.address = address;
 	}
 	public int getOwerID() {
 		return owerID;
@@ -47,25 +49,58 @@ public class VenuesDB {
 		this.owerID = owerID;
 	}
 	public String getCity() {
-		return City;
+		return city;
 	}
 	public void setCity(String city) {
-		City = city;
+		this.city = city;
 	}
 	public String getState() {
-		return State;
+		return state;
 	}
 	public void setState(String state) {
-		State = state;
+		this.state = state;
 	}
 	public String getPostalCode() {
-		return PostalCode;
+		return postalCode;
 	}
 	public void setPostalCode(String postalCode) {
-		PostalCode = postalCode;
+		this.postalCode = postalCode;
+	}
+	public String getPrice() {
+		return price;
 	}
 
 
+	public void setPrice(String price) {
+		this.price = price;
+	}
+
+    public void findvenueprice(String input) {
+		connectMeIn();
+		String SQL = "SELECT venue.Name, TicketVenuePrices.TicketPrice\n" + 
+				"FROM venue\n" + 
+				"INNER JOIN TicketVenuePrices ON venue.Id=TicketVenuePrices.venueID;";
+	    Statement stat;
+	    int i=0;
+		try {
+			stat = conn.createStatement();
+			ResultSet rs = stat.executeQuery(SQL);
+			
+			while (rs.next()){
+			    if(rs.getString(1).equals(input)) {
+		        setPrice(rs.getString(2));
+			    }
+		        
+		    }
+			
+		    stat.close();
+		        
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		closeConnection();
+
+    }
 
 
 

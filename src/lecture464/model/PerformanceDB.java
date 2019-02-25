@@ -7,105 +7,62 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class ConcertsDB {
-	private int id=0;
-	private String moviename="";
-	private String description="x";
-	private String thumbnail ="x";
-	private String rating ="x";
-	private String starttime="";
+public class PerformanceDB {
+	private String id="";
+	private String name="";
 	private String venue="";
+	private String starttime="";
 	private String price="";
+	private String thumbnail="";
 	
 	
-	public ConcertsDB() {
-		super();
+	public String getId() {
+		return id;
 	}
-	
-	
-	
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
 	public String getVenue() {
 		return venue;
 	}
-
-
 
 	public void setVenue(String venue) {
 		this.venue = venue;
 	}
 
-
-
-	public String getPrice() {
-		return price;
-	}
-
-
-
-	public void setPrice(String price) {
-		this.price = price;
-	}
-
-
-
-	public int getId() {
-		return id;
-	}
-	public void setId(int id) {
-		this.id = id;
-	}
-	public String getMoviename() {
-		return moviename;
-	}
-	public void setMoviename(String moviename) {
-		this.moviename = moviename;
-	}
-	public String getDescription() {
-		return description;
-	}
-	public void setDescription(String description) {
-		this.description = description;
-	}
-	public String getThumbnail() {
-		return thumbnail;
-	}
-	public void setThumbnail(String thumbnail) {
-		this.thumbnail = thumbnail;
-	}
-	public String getRating() {
-		return rating;
-	}
-	public void setRating(String rating) {
-		this.rating = rating;
-	}
-	
-
-    public String getStarttime() {
+	public String getStarttime() {
 		return starttime;
 	}
-
-
 
 	public void setStarttime(String starttime) {
 		this.starttime = starttime;
 	}
 
+	public String getPrice() {
+		return price;
+	}
 
+	public void setPrice(String price) {
+		this.price = price;
+	}
 
-	public void setallvalue(String name) {
-           for(int i=0;i<getcolumn();i++) {
-        	   if(name.equals(getconcert(i+1)[1])) {
-        	   
-        	   setId(Integer.parseInt(getconcert(i+1)[0]));
-        	   setMoviename(getconcert(i+1)[1]);
-        	   setDescription(getconcert(i+1)[2]);
-        	   setThumbnail(getconcert(i+1)[3]);
-        	   setRating(getconcert(i+1)[4]);
-        	   
-        	   }
-           }
-        	   
-    }
+	public String getThumbnail() {
+		return thumbnail;
+	}
+
+	public void setThumbnail(String thumbnail) {
+		this.thumbnail = thumbnail;
+	}
 
 	Connection conn = null;
 	Statement stmt = null;
@@ -121,26 +78,31 @@ public class ConcertsDB {
 	static final String USER = "ydeng"; // Replace with your CSE_LOGIN
 	static final String PASS = "j87aDc";   // Replace with your CSE MySQL_PASSWORD
 	
-	public String[] getconcert (int col){
+	public void getconcert (String movie, String venue){
 		connectMeIn();
-		String SQL = "SELECT * from concert";
+		String SQL = "SELECT concert.`Movie name`,venue.Name,performance.StartTime,TicketVenuePrices.TicketPrice,concert.Thumbnail,performance.Id\n" + 
+				"FROM (((performance\n" + 
+				"INNER JOIN concert ON performance.concertID = concert.id)\n" + 
+				"inner join venue on performance.venueID = venue.Id)\n" + 
+				"inner join TicketVenuePrices on performance.Id = TicketVenuePrices.performanceID);";
 	    Statement stat;
-	    int i=0;
-		String data[]=new String[5];
+
+
 		try {
 			stat = conn.createStatement();
 			ResultSet rs = stat.executeQuery(SQL);
 
 			while (rs.next()){
-			i++;
-			if(col==i){
-				data[0]=rs.getString(1);
-				data[1]=rs.getString(2);
-				data[2]=rs.getString(3);
-				data[3]=rs.getString(4);
-				data[4]=rs.getString(5);
-				
-			}
+
+			    if(movie.equals(rs.getString(1))&&venue.equals(rs.getString(2))) {
+			    setId(rs.getString(6));	
+				setName(rs.getString(1));
+				setVenue(rs.getString(2));
+				setStarttime(rs.getString(3));
+				setPrice(rs.getString(4));
+				setThumbnail(rs.getString(5));
+			    }
+			
 		        
 		        
 		    }
@@ -151,7 +113,7 @@ public class ConcertsDB {
 			e.printStackTrace();
 		}
 		closeConnection();
-		return data;
+		
 		
 
 	
@@ -171,28 +133,7 @@ public class ConcertsDB {
 			e.printStackTrace();
 		}
 	}
-	public void displayAllUsers() {
-		connectMeIn();
-		String SQL = "SELECT * from concert";
-	    Statement stat;
-	    int i=0;
-		try {
-			stat = conn.createStatement();
-			ResultSet rs = stat.executeQuery(SQL);
-			
-			while (rs.next()){
-			
-		        System.out.println(rs.getString(2).charAt(2));
-		        
-		    }
-			
-		    stat.close();
-		        
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		closeConnection();
-	}
+
 	public void closeConnection(){
 		try {
 			conn.close();
@@ -203,7 +144,7 @@ public class ConcertsDB {
 	public int getcolumn () {
 		String x="";
 		connectMeIn();
-		String SQL = "SELECT count(*) from concert";
+		String SQL = "SELECT count(*) from performance";
 	    Statement stat;
 		try {
 			stat = conn.createStatement();
@@ -224,4 +165,5 @@ public class ConcertsDB {
 		int y=Integer.parseInt(x);
 		return y;
 	}
+	
 }

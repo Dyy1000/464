@@ -1,6 +1,7 @@
 package lecture464.servlet;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -9,8 +10,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import lecture464.model.ConcertsDB;
-import lecture464.model.HotelBean;
+
+import lecture464.model.PerformanceDB;
+
+
 
 
 
@@ -37,54 +40,31 @@ public class VenueAndConcertSearchQuery extends HttpServlet {
 		
 		HttpSession session = request.getSession();
 		
-		ConcertsDB concert =
-				(ConcertsDB)session.getAttribute("concertinfo");
+		PerformanceDB performance =
+				(PerformanceDB)session.getAttribute("concertinfo");
 		
-		concert = new ConcertsDB();
+		performance = new PerformanceDB();
 		
-		  session.setAttribute("concertinfo", concert);
-		concert.setMoviename("result not found");
+		 session.setAttribute("concertinfo", performance);
+		performance.setName("result not found");
 		String search=request.getParameter("ConcertSearch");
-        for(int i=0;i<concert.getcolumn();i++) {
-     	   if(search.equals(concert.getconcert(i+1)[1])) {
-     	        concert.setallvalue(search);
-     		   
-     		   
-     	   }
-     	   
-     	  }
-		
-		
-//		String hotelName = request.getParameter("hotelName");
-//		String noOfRooms = request.getParameter("noOfRooms");
-//		
-//		HttpSession session = request.getSession();
-//		
-//		ConcertsDB concert =
-//		(ConcertsDB)session.getAttribute("concertinfo");
-////		HotelBean newHotel =
-////			      (HotelBean)session.getAttribute("hotelInfo");
-//		if(concert == null) {
-//		concert = new ConcertsDB();
-//		  session.setAttribute("concertinfo", concert);
-//		}
-////		 if (newHotel == null) {		    
-////		     newHotel = new HotelBean();
-////		     session.setAttribute("hotelInfo", newHotel);
-////		 }
-//
-//		concert.setMoviename(hotelName);
-//		concert.setId(Integer.parseInt(noOfRooms));
-//		 
-////			newHotel.setHotelName(hotelName);
-////			newHotel.setNoOfRooms(Integer.parseInt(noOfRooms));
+        String venue=request.getParameter("venue");
+     	 performance.getconcert(search,venue);
+     	  
 
+ 
+
+         
+//         PrintWriter out=response.getWriter();
+//         out.print(search);
+//         out.print(venue);
+//         out.print(concerts);
 		
-		
+  	 response.sendRedirect("ConcertSearchResult.jsp");	
 		
 		
 
-		response.sendRedirect("ConcertSearchResult.jsp");
+		
 	}
 
 	/**

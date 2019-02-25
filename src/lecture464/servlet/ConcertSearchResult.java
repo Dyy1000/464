@@ -8,6 +8,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import lecture464.model.ConcertsDB;
+import lecture464.model.ReviewsDB;
+
 
 /**
  * Servlet implementation class ConcertSearchResult
@@ -29,8 +34,35 @@ public class ConcertSearchResult extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		PrintWriter webWrite=response.getWriter();
-		webWrite.println("aaa");
+//		PrintWriter webWrite=response.getWriter();
+//		webWrite.println("aaa");
+		String concert=request.getParameter("concert");
+		String venue=request.getParameter("venue");
+		String time=request.getParameter("time");
+		String price=request.getParameter("price");
+				HttpSession session = request.getSession();
+		 
+				ConcertsDB concerts = 
+						(ConcertsDB)session.getAttribute("concertthing");
+				
+				concerts = new ConcertsDB();
+				
+				 session.setAttribute("concertthing", concerts);
+				 concerts.setallvalue(concert);
+				 concerts.setVenue(venue);
+				 concerts.setStarttime(time);
+				 concerts.setPrice(price);
+				 
+				 ReviewsDB review=
+						 (ReviewsDB)session.getAttribute("reviewinfo");
+				 review = new ReviewsDB();
+				 session.setAttribute("reviewinfo",review);
+				 review.setReview(concert);
+				 
+				
+
+		
+		response.sendRedirect("ConcertDetailandSelection.jsp");
 		
 	}
 
